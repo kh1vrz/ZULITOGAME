@@ -2,198 +2,310 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ZULITOGAME 💙</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un saltito hasta tu corazón 💙</title>
 <style>
-:root{--sky:#c7f0ff;--blue:#66c9f3;--blue2:#3297ce;--deep:#215c82;--pink:#ff9ecb;--ink:#285574;--white:#fff}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;padding:18px;font-family:"Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 12% 8%,#fff 0 2%,transparent 2.5%),linear-gradient(145deg,#e8faff,#aee8ff 55%,#e0f8ff)}
-button,input{font:inherit}button{border:0;border-radius:999px;padding:11px 17px;background:linear-gradient(135deg,#77d5fa,#389bd1);color:white;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #287eae;transition:.15s}button:hover{filter:brightness(1.04);transform:translateY(-1px)}button:active{transform:translateY(2px);box-shadow:0 2px 0 #287eae}button.secondary{background:#edfaff;color:#337da5;box-shadow:0 4px 0 #c2e8f8}button:disabled{opacity:.5;cursor:not-allowed}
-.shell{max-width:1000px;margin:auto;padding:clamp(14px,3vw,28px);border:2px solid white;border-radius:28px;background:#ffffffc9;box-shadow:0 22px 60px #2b7eb72b}
-header{text-align:center;margin-bottom:18px}.eyebrow{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:#5598bc}h1{font-size:clamp(2rem,5vw,3.2rem);color:#2d83b9;margin:5px 0}.sub{margin:0;color:#557e98}
-.mode-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
-.mode-card{background:#f2fbff;border:2px solid white;border-radius:22px;padding:18px 14px;text-align:left;box-shadow:0 5px 18px #438fb51a;cursor:pointer;min-height:158px;color:var(--ink);display:flex;flex-direction:column;gap:5px}
-.mode-card:hover{border-color:#a8e4ff;transform:translateY(-3px)}.mode-card .emoji{font-size:2.3rem}.mode-card strong{font-size:1.05rem;color:#2d83b9}.mode-card span:last-child{font-size:.88rem;line-height:1.4;color:#5d8197}
-.game-panel{margin-top:17px;border:2px solid white;border-radius:24px;background:linear-gradient(#c2efff,#edfbff);overflow:hidden;min-height:360px}
-.panel-top{padding:13px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#ffffff85}.panel-top h2{margin:0;color:#2d83b9}.status{font-weight:800;font-size:.92rem}
-.stage{padding:18px;min-height:285px;display:flex;align-items:center;justify-content:center}
-.hidden{display:none!important}.welcome{text-align:center;max-width:570px;padding:24px}.welcome .big{font-size:4rem;animation:bob 2s infinite}.welcome h2{color:#2d83b9;font-size:1.7rem}.welcome p{line-height:1.6}
-canvas{width:min(100%,780px);height:auto;display:block;border-radius:17px;background:#a5e6ff;touch-action:manipulation}
-.controls{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:10px 0}.note{font-size:.9rem;color:#5c849d;text-align:center;line-height:1.5;margin:13px auto 0}
-.cardbox{width:min(600px,100%);background:#ffffffd9;border:2px solid white;border-radius:23px;padding:22px;text-align:center;box-shadow:0 10px 28px #4b9cc51a}
-.cardbox h3{color:#2d83b9;font-size:1.5rem;margin:6px 0 12px}.question{font-size:1.2rem;line-height:1.5;font-weight:800;margin:15px 0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.answers button{border-radius:15px;box-shadow:none;background:#e8f8ff;color:#2d7199;border:2px solid #d2f0ff}.answers button:hover{background:#d8f4ff}.feedback{min-height:30px;margin-top:12px;font-weight:800}.progress{height:8px;background:#d9f3ff;border-radius:99px;overflow:hidden;margin:15px 0}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#74d5f7,#ff9ecb);transition:width .2s}
-.memory-grid{display:grid;grid-template-columns:repeat(4, minmax(54px,75px));gap:9px;justify-content:center;margin:18px auto}.memory-card{aspect-ratio:1;border-radius:15px;background:#b7eaff;box-shadow:0 4px 0 #7cc7e8;color:#286d96;font-size:1.7rem;padding:0}.memory-card.open,.memory-card.matched{background:#fff;color:#2d83b9;box-shadow:none;border:2px solid #bdeaff}.memory-card.matched{border-color:#ffc0dc}
-.love-note{padding:16px;border-radius:17px;background:#effaff;border:1px dashed #a8def6;text-align:center;line-height:1.7}
-@keyframes bob{50%{transform:translateY(-8px) rotate(4deg)}}
-@media(max-width:680px){.mode-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mode-card{min-height:145px;padding:14px 12px}.stage{padding:10px;min-height:260px}.answers{grid-template-columns:1fr}.shell{padding:12px;border-radius:22px}}
-@media(max-width:390px){.mode-grid{grid-template-columns:1fr}.mode-card{min-height:auto}.mode-card .emoji{font-size:1.9rem}}
+  :root {
+    --sky: #bceeff;
+    --blue: #62c9f5;
+    --deep: #277fb7;
+    --navy: #245477;
+    --pink: #ff9fca;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    padding: 18px; font-family: "Trebuchet MS", system-ui, sans-serif;
+    color: var(--navy);
+    background: radial-gradient(circle at 15% 10%, #fff 0 3%, transparent 4%),
+                linear-gradient(145deg, #dff8ff, #a9e3ff 55%, #d7f5ff);
+    overflow-x: hidden;
+  }
+  .game-shell {
+    width: min(920px, 100%); background: rgba(255,255,255,.78);
+    border: 2px solid rgba(255,255,255,.95); border-radius: 28px;
+    box-shadow: 0 22px 60px rgba(43, 126, 176, .18);
+    padding: clamp(14px, 3vw, 28px); backdrop-filter: blur(8px);
+  }
+  header { text-align: center; margin-bottom: 15px; }
+  .eyebrow { letter-spacing: .18em; text-transform: uppercase; font-size: .72rem; font-weight: 800; color: #5798bf; }
+  h1 { margin: 5px 0; font-size: clamp(1.7rem, 5vw, 3rem); color: #2d83b9; }
+  .subtitle { margin: 0; color: #547d98; }
+  .hud { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin: 14px 0 10px; }
+  .pill { border-radius: 999px; padding: 8px 14px; background: #e6f8ff; border: 1px solid #c3edff; font-weight: 800; }
+  .game-area {
+    position: relative; overflow: hidden; border-radius: 22px; border: 2px solid #fff;
+    background: linear-gradient(#9fe4ff 0%, #d9f6ff 76%, #f4fdff 100%);
+    box-shadow: inset 0 -8px 0 rgba(76, 173, 218, .08);
+  }
+  canvas { width: 100%; height: auto; display: block; touch-action: manipulation; }
+  .overlay {
+    position: absolute; inset: 0; display: grid; place-items: center; padding: 20px;
+    text-align: center; background: rgba(216, 246, 255, .78); backdrop-filter: blur(4px);
+  }
+  .overlay.hidden { display: none; }
+  .panel { max-width: 440px; padding: 22px; border: 2px solid #fff; border-radius: 24px; background: rgba(255,255,255,.88); box-shadow: 0 12px 32px #4b9cc533; }
+  .big-heart { font-size: 2.8rem; animation: bob 1.7s ease-in-out infinite; }
+  .panel h2 { margin: 4px 0 8px; color: #287fb3; font-size: clamp(1.4rem, 4vw, 2rem); }
+  .panel p { line-height: 1.5; margin: 8px 0 16px; }
+  button {
+    border: 0; border-radius: 999px; padding: 12px 20px; font: inherit; font-weight: 800;
+    color: white; background: linear-gradient(135deg, #65cafa, #388fc9);
+    box-shadow: 0 5px 0 #2677a8; cursor: pointer; transition: transform .15s, filter .15s;
+  }
+  button:hover { filter: brightness(1.04); transform: translateY(-1px); }
+  button:active { transform: translateY(3px); box-shadow: 0 2px 0 #2677a8; }
+  .controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .controls button { min-width: 135px; }
+  .hint { text-align: center; font-size: .9rem; color: #5c849d; margin: 12px 0 0; }
+  .personal-note { margin-top: 18px; padding: 15px; text-align: center; border-radius: 18px; background: #effaff; border: 1px dashed #a8def6; }
+  .personal-note strong { color: #3289bd; }
+  @keyframes bob { 50% { transform: translateY(-7px) rotate(5deg); } }
+  @media (max-width: 520px) {
+    .game-shell { padding: 13px; border-radius: 22px; }
+    .pill { padding: 7px 10px; font-size: .88rem; }
+    .controls button { flex: 1; min-width: 110px; }
+  }
 </style>
 </head>
 <body>
-<main class="shell">
-<header>
-<div class="eyebrow">un pequeño universo hecho para zulito. </div>
-<h1>Blue Love. 💙</h1>
-<p class="sub">Seis mini aventuras y un lugar especial para ti, mi amor.</p>
-</header>
+<main class="game-shell">
+  <header>
+    <div class="eyebrow">un mini mundo para ti</div>
+    <h1>Un saltito hasta tu corazón 💙</h1>
+    <p class="subtitle">Salta entre las nubecitas y recoge corazoncitos.</p>
+  </header>
 
-<section class="mode-grid" id="modeGrid" aria-label="Elige un juego">
-<button class="mode-card" data-mode="jump"><span class="emoji">🐰</span><strong>1. Saltito celeste</strong><span>Salta obstáculos y recoge corazones.</span></button>
-<button class="mode-card" data-mode="pac"><span class="emoji">👾</span><strong>2. Come-estrellitas</strong><span>Un mini laberinto arcade: recoge todo y evita al fantasmita.</span></button>
-<button class="mode-card" data-mode="quiz"><span class="emoji">💌</span><strong>3. Adivina mi amor</strong><span>Preguntas tiernas y acertijos románticos.</span></button>
-<button class="mode-card" data-mode="memory"><span class="emoji">🧠</span><strong>4. Memoria de corazones</strong><span>Encuentra las parejas escondidas.</span></button>
-<button class="mode-card" data-mode="click"><span class="emoji">🌟</span><strong>5. Caza-estrellas</strong><span>¡Toca las estrellas antes de que desaparezcan!</span></button>
-<button class="mode-card" data-mode="gift"><span class="emoji">🎁</span><strong>6. Caja sorpresa</strong><span>Abre regalitos y descubre mensajes bonitos.</span></button>
-</section>
+  <div class="hud" aria-live="polite">
+    <div class="pill">💗 Corazones: <span id="score">0</span></div>
+    <div class="pill">⭐ Récord: <span id="best">0</span></div>
+    <div class="pill">🌈 Nivel: <span id="level">1</span></div>
+  </div>
 
-<section class="game-panel">
-<div class="panel-top">
-<h2 id="gameTitle">✨ Elige tu aventura</h2>
-<div class="status" id="status">6 juegos disponibles</div>
-</div>
-<div class="stage" id="stage">
-<div class="welcome">
-<div class="big">🩵</div>
-<h2>Hola, mi princesa. </h2>
-<p>¿Qué aventura quieres probar primero? Cada minijuego tiene su propia misión. Puedes cambiar de juego cuando quieras.</p>
-<div class="love-note">Este pequeño juego está hecho para recordarte que hay alguien que desea verte sonreir, hermosa. 💙</div>
-</div>
-</div>
-</section>
-<div class="controls" id="globalControls"><button class="secondary" id="menuBtn">⌂ Volver al menú</button></div>
-<p class="note">Te amo, Zulito. 🩵</p>
+  <section class="game-area" aria-label="Juego de saltos">
+    <canvas id="game" width="860" height="390" aria-label="Personaje que salta obstáculos"></canvas>
+    <div class="overlay" id="startScreen">
+      <div class="panel">
+        <div class="big-heart">🩵</div>
+        <h2>Hola, personita bonita</h2>
+        <p>Este pequeño cielo es para ti. ¿Lista para saltar, recoger corazones y llegar al final?</p>
+        <button id="startBtn">¡Vamos a jugar! ✨</button>
+      </div>
+    </div>
+    <div class="overlay hidden" id="endScreen">
+      <div class="panel">
+        <div class="big-heart" id="endEmoji">💖</div>
+        <h2 id="endTitle">¡Lo hiciste!</h2>
+        <p id="endMessage">Cada corazoncito es una razón para sonreír.</p>
+        <button id="againBtn">Jugar otra vez ↻</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="controls">
+    <button id="jumpBtn" aria-label="Saltar">⬆ Saltar</button>
+    <button id="pauseBtn">⏸ Pausar</button>
+    <button id="soundBtn">🔊 Sonido: sí</button>
+  </div>
+  <p class="hint">Controles: <strong>espacio</strong>, <strong>↑</strong> o toca «Saltar». Evita los bloques y recoge 💗.</p>
+  <div class="personal-note">
+    <strong>Un mensajito para ti:</strong><br>
+    No importa cuántos obstáculos aparezcan, siempre vale la pena seguir avanzando contigo. 💙
+  </div>
 </main>
 <script>
 (() => {
-const $=s=>document.querySelector(s), stage=$('#stage'), title=$('#gameTitle'), status=$('#status');
-let current=null, raf=0, cleanup=()=>{};
-function stop(){if(raf)cancelAnimationFrame(raf);raf=0;cleanup();cleanup=()=>{};current=null;}
-function setHeader(t,s='¡A jugar!'){title.textContent=t;status.textContent=s;}
-function showMenu(){stop();setHeader('✨ Elige tu aventura','6 juegos disponibles');stage.innerHTML=`<div class="welcome"><div class="big">🩵</div><h2>¡Escoge un minijuego!</h2><p>¿Saltos, laberinto, acertijos o una sorpresa? Hay una aventura para cada estado de ánimo.</p><div class="love-note">Pista: la caja sorpresa tiene mensajitos secretos. 🎁</div></div>`;}
-$('#menuBtn').addEventListener('click',showMenu);
-document.querySelectorAll('.mode-card').forEach(b=>b.addEventListener('click',()=>launch(b.dataset.mode)));
-function launch(mode){stop();current=mode;({jump:runJump,pac:runPac,quiz:runQuiz,memory:runMemory,click:runClick,gift:runGift})[mode]();}
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score');
+  const bestEl = document.getElementById('best');
+  const levelEl = document.getElementById('level');
+  const startScreen = document.getElementById('startScreen');
+  const endScreen = document.getElementById('endScreen');
+  const startBtn = document.getElementById('startBtn');
+  const againBtn = document.getElementById('againBtn');
+  const jumpBtn = document.getElementById('jumpBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const soundBtn = document.getElementById('soundBtn');
 
-// GAME 1: jump
-function runJump(){
- setHeader('🐰 Saltito celeste','Corazones: 0');
- stage.innerHTML=`<div style="width:100%;text-align:center"><canvas id="jumpCanvas" width="760" height="300"></canvas><div class="controls"><button id="jStart">¡Empezar!</button><button id="jJump">⬆ Saltar</button><button class="secondary" id="jPause">⏸ Pausar</button></div><p class="note">Usa espacio, ↑ o el botón Saltar. Evita los bloques azules y recoge 💗.</p></div>`;
- const c=$('#jumpCanvas'),x=c.getContext('2d'),W=c.width,H=c.height,ground=245;let live=false,paused=false,frame=0,score=0,speed=4,obs=[],hearts=[],p={x:85,y:ground-35,vy:0,j:false};
- function reset(){live=true;paused=false;frame=score=0;speed=4;obs=[];hearts=[];p.y=ground-35;p.vy=0;p.j=false;$('#jStart').textContent='Reiniciar';$('#jPause').textContent='⏸ Pausar';}
- function jump(){if(!live){reset();return}if(!paused&&!p.j){p.vy=-12;p.j=true}}
- function key(e){if(['Space','ArrowUp'].includes(e.code)){e.preventDefault();jump()}}
- document.addEventListener('keydown',key);cleanup=()=>document.removeEventListener('keydown',key);
- $('#jStart').onclick=reset;$('#jJump').onclick=jump;$('#jPause').onclick=()=>{paused=!paused;$('#jPause').textContent=paused?'▶ Seguir':'⏸ Pausar'};
- c.onclick=jump;
- function draw(){
-  x.clearRect(0,0,W,H);let sky=x.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#91ddff');sky.addColorStop(1,'#effcff');x.fillStyle=sky;x.fillRect(0,0,W,H);
-  for(let i=0;i<5;i++){x.fillStyle='#fff';x.beginPath();x.arc((i*180+frame*.25)%(W+80),45+(i%2)*40,17,0,7);x.arc((i*180+frame*.25)%(W+80)+18,42+(i%2)*40,21,0,7);x.fill()}
-  x.fillStyle='#9ee4d4';x.fillRect(0,ground,W,H-ground);x.fillStyle='#72d1bf';x.fillRect(0,ground,W,5);
-  if(live&&!paused){frame++;speed=4+Math.min(score*.08,3);p.vy+=.62;p.y+=p.vy;if(p.y>=ground-35){p.y=ground-35;p.vy=0;p.j=false}
-   if(frame%Math.max(42,78-Math.floor(score/4)*3)===0)obs.push({x:W,y:ground-25-Math.random()*22,w:20+Math.random()*10,h:25+Math.random()*22});
-   if(frame%110===0)hearts.push({x:W,y:ground-60-Math.random()*90});
-   obs.forEach(o=>o.x-=speed);hearts.forEach(h=>h.x-=speed);
-   if(obs.some(o=>p.x+28>o.x+3&&p.x+5<o.x+o.w&&p.y+30>o.y)){live=false;setHeader('🐰 Saltito celeste',`Fin de partida · ${score} 💗`)}
-   hearts=hearts.filter(h=>{if(p.x+32>h.x-10&&p.x<h.x+12&&p.y+35>h.y-10&&p.y<h.y+10){score++;return false}return h.x>-30});
-   obs=obs.filter(o=>o.x+o.w>0);status.textContent=`Corazones: ${score}`;
+  const W = canvas.width, H = canvas.height, groundY = 320;
+  let state = 'ready', score = 0, best = 0, frame = 0, speed = 4;
+  let obstacles = [], hearts = [], particles = [], clouds = [];
+  let soundOn = true, audioCtx = null, animationId = null;
+  const player = { x: 105, y: groundY - 42, w: 36, h: 42, vy: 0, jumping: false };
+  const gravity = 0.68, jumpPower = -13.2;
+
+  try { best = Number(localStorage.getItem('blueJumpBest') || 0); } catch (_) {}
+  bestEl.textContent = best;
+
+  function initClouds() {
+    clouds = [
+      {x: 70, y: 64, s: 1.0}, {x: 310, y: 112, s: .7},
+      {x: 560, y: 58, s: .9}, {x: 780, y: 145, s: .65}
+    ];
   }
-  hearts.forEach(h=>{x.font='24px sans-serif';x.fillText('💗',h.x,h.y)});
-  obs.forEach(o=>{x.fillStyle='#529fd0';x.beginPath();x.roundRect(o.x,o.y,o.w,o.h,6);x.fill();x.fillStyle='#fff';x.fillText('✦',o.x+4,o.y+17)});
-  x.fillStyle='#65c6f0';x.beginPath();x.ellipse(p.x+17,p.y+22,16,14,0,0,7);x.fill();x.beginPath();x.ellipse(p.x+9,p.y+7,4,11,-.2,0,7);x.ellipse(p.x+24,p.y+7,4,11,.2,0,7);x.fill();x.fillStyle='#fff';x.beginPath();x.arc(p.x+12,p.y+20,4,0,7);x.arc(p.x+23,p.y+20,4,0,7);x.fill();x.fillStyle='#245477';x.beginPath();x.arc(p.x+13,p.y+20,1.7,0,7);x.arc(p.x+23,p.y+20,1.7,0,7);x.fill();
-  if(!live){x.fillStyle='#215c82';x.font='bold 20px Trebuchet MS';x.textAlign='center';x.fillText(frame?'¡Ups! Pulsa Reiniciar para otra vuelta':'Pulsa ¡Empezar! para comenzar',W/2,28)}
-  if(paused){x.fillStyle='#215c82';x.font='bold 22px Trebuchet MS';x.textAlign='center';x.fillText('Pausa para respirar 🩵',W/2,150)}
-  raf=requestAnimationFrame(draw)
- }draw();
-}
+  initClouds();
 
-// GAME 2: mini maze chase
-function runPac(){
- setHeader('👾 Come-estrellitas','Estrellas: 0');
- const map=[
- '###############',
- '#...#.....#...#',
- '#.#.#.###.#.#.#',
- '#.#...#...#.#.#',
- '#.###.#.###.#.#',
- '#.....P.....E.#',
- '###.#.###.#.###',
- '#...#.....#...#',
- '#.#####.#####.#',
- '#.............#',
- '###############'
- ];
- const tile=31;let grid=map.map(r=>r.split('')),player={x:6,y:5},enemy={x:13,y:5},stars=0,ended=false,steps=0;
- stage.innerHTML=`<div style="width:100%;text-align:center"><canvas id="pacCanvas" width="${15*tile}" height="${11*tile}"></canvas><div class="controls"><button class="secondary" data-dir="up">⬆</button><button class="secondary" data-dir="left">⬅</button><button class="secondary" data-dir="down">⬇</button><button class="secondary" data-dir="right">➡</button><button id="pacReset">Reiniciar</button></div><p class="note">Recoge todos los puntitos ✦ y evita al fantasmita. Usa las flechas del teclado o los botones.</p></div>`;
- const c=$('#pacCanvas'),x=c.getContext('2d');
- function fresh(){grid=map.map(r=>r.split(''));player={x:6,y:5};enemy={x:13,y:5};stars=0;ended=false;steps=0;setHeader('👾 Come-estrellitas','¡Recoge todos los puntitos!');draw()}
- function move(dx,dy){
-  if(ended)return;let nx=player.x+dx,ny=player.y+dy;if(grid[ny]?.[nx]==='#')return;
-  player={x:nx,y:ny};if(grid[ny][nx]==='.') {grid[ny][nx]=' ';stars++}
-  steps++;if(steps%2===0){let choices=[[1,0],[-1,0],[0,1],[0,-1]].filter(([a,b])=>grid[enemy.y+b]?.[enemy.x+a]!=='#');if(choices.length){choices.sort((a,b)=>Math.abs(enemy.x+a[0]-player.x)+Math.abs(enemy.y+a[1]-player.y)-(Math.abs(enemy.x+b[0]-player.x)+Math.abs(enemy.y+b[1]-player.y)));let pick=Math.random()<.25?choices[Math.floor(Math.random()*choices.length)]:choices[0];enemy.x+=pick[0];enemy.y+=pick[1]}}
-  if(player.x===enemy.x&&player.y===enemy.y){ended=true;setHeader('👾 ¡El fantasmita te atrapó!',`Junta ${stars} estrellas · toca Reiniciar`)}
-  else if(!grid.some(row=>row.includes('.'))){ended=true;setHeader('🏆 ¡Laberinto completado!',`¡Ganaste con ${stars} estrellas!`)}
-  else setHeader('👾 Come-estrellitas',`Estrellas: ${stars}`);draw()
- }
- function draw(){x.fillStyle='#dff8ff';x.fillRect(0,0,c.width,c.height);for(let y=0;y<grid.length;y++)for(let xx=0;xx<grid[y].length;xx++){if(grid[y][xx]==='#'){x.fillStyle='#4aa7d7';x.beginPath();x.roundRect(xx*tile+2,y*tile+2,tile-4,tile-4,6);x.fill()}else if(grid[y][xx]==='.'){x.fillStyle='#fff';x.beginPath();x.arc(xx*tile+tile/2,y*tile+tile/2,3,0,7);x.fill()}}
-  x.font='23px sans-serif';x.textAlign='center';x.fillText('😺',player.x*tile+tile/2,player.y*tile+tile*.75);x.fillText('👻',enemy.x*tile+tile/2,enemy.y*tile+tile*.75);
-  if(ended){x.fillStyle='#215c82';x.font='bold 15px sans-serif';x.fillText(player.x===enemy.x&&player.y===enemy.y?'¡Otra oportunidad!':'¡Súper!',c.width/2,15)}
- }
- const key=e=>{const d={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0]}[e.key];if(d){e.preventDefault();move(...d)}};document.addEventListener('keydown',key);cleanup=()=>document.removeEventListener('keydown',key);
- document.querySelectorAll('[data-dir]').forEach(b=>b.onclick=()=>{const d={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[b.dataset.dir];move(...d)});
- $('#pacReset').onclick=fresh;draw();
-}
+  function beep(freq = 600, duration = .08) {
+    if (!soundOn) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+      osc.type = 'sine'; osc.frequency.value = freq;
+      gain.gain.setValueAtTime(.06, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + duration);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(); osc.stop(audioCtx.currentTime + duration);
+    } catch (_) {}
+  }
 
-// GAME 3: quiz
-function runQuiz(){
- const qs=[
-  {q:'¿Qué hace más bonito un día normal?',a:['Un mensaje tuyo 💌','Un lunes con tareas','Perder los calcetines','Que se acabe el Wi-Fi'],ok:0,why:'¡Exacto! A veces un mensajito cambia todo el día. 💙'},
-  {q:'Si nuestro cariño fuera el cielo, sería…',a:['Un cielo sin estrellas','Un cielo azul infinito 🩵','Una nube de tarea','Una tormenta de calcetines'],ok:1,why:'Un cielo infinito para guardar un montón de momentos bonitos.'},
-  {q:'¿Cuál es el superpoder más lindo?',a:['Volar al revés','Hablar con tostadoras','Hacer sonreír a alguien ✨','Convertir agua en sopa'],ok:2,why:'Hacer sonreír a alguien es un superpoder de verdad.'},
-  {q:'Adivinanza: no se compra, se cuida; crece con detalles y se comparte. ¿Qué es?',a:['Una planta de plástico','El cariño 💗','Una contraseña','Un zapato'],ok:1,why:'¡Sí! El cariño crece cuando lo cuidamos.'},
-  {q:'¿Qué debería tener una aventura perfecta?',a:['Risas y compañía','Un mapa que no sirve','Cero snacks','Un dragón con sueño'],ok:0,why:'Risas, confianza y compañía: ¡esa sí es una aventura!'}
- ];
- let i=0,correct=0;function show(){const q=qs[i];setHeader('💌 Adivina mi amor',`Pregunta ${i+1} de ${qs.length}`);stage.innerHTML=`<div class="cardbox"><div style="font-size:2.5rem">💙❔</div><div class="progress"><div style="width:${i/qs.length*100}%"></div></div><div class="question">${q.q}</div><div class="answers">${q.a.map((a,j)=>`<button data-answer="${j}">${a}</button>`).join('')}</div><div class="feedback" id="feedback"></div><button id="nextQ" class="hidden">Siguiente ➜</button></div>`;
- document.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{if($('#nextQ').dataset.done)return;let ok=Number(b.dataset.answer)===q.ok;if(ok)correct++;$('#feedback').textContent=ok?'¡Correcto! '+q.why:'Casi 💙 La respuesta bonita era: '+q.a[q.ok];$('#nextQ').classList.remove('hidden');$('#nextQ').dataset.done='1';document.querySelectorAll('[data-answer]').forEach(z=>z.disabled=true)});
- $('#nextQ').onclick=()=>{if(i<qs.length-1){i++;show()}else{setHeader('💖 Resultado del acertijo',`${correct}/${qs.length} respuestas`);stage.innerHTML=`<div class="cardbox"><div style="font-size:3rem">${correct>=4?'🏆💙':'🩵✨'}</div><h3>${correct>=4?'¡Corazón experto!':'¡Gracias por jugar!'}</h3><p>Acertaste ${correct} de ${qs.length}. Lo más importante no era sacar nota: era regalarte un ratito bonito. 💌</p><button id="quizAgain">Jugar otra vez</button></div>`;$('#quizAgain').onclick=()=>{i=0;correct=0;show()}}};}
- show();
-}
+  function resetGame() {
+    score = 0; frame = 0; speed = 4; obstacles = []; hearts = []; particles = [];
+    player.y = groundY - player.h; player.vy = 0; player.jumping = false;
+    scoreEl.textContent = score; levelEl.textContent = 1;
+    state = 'playing'; startScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+    pauseBtn.textContent = '⏸ Pausar';
+    if (animationId) cancelAnimationFrame(animationId);
+    loop();
+  }
 
-// GAME 4: memory
-function runMemory(){
- const symbols=['💙','🩵','💗','🌙','⭐','🦋','☁️','🎀'];let cards=[...symbols,...symbols].sort(()=>Math.random()-.5),opened=[],matched=new Set(),moves=0,locked=false;
- setHeader('🧠 Memoria de corazones','Parejas: 0/8');
- stage.innerHTML=`<div class="cardbox"><h3>Encuentra las 8 parejas</h3><p>Voltea dos tarjetas por turno. ¡Intenta recordar dónde viste cada símbolo!</p><div class="memory-grid" id="memoryGrid"></div><div class="feedback" id="memoryStatus">Movimientos: 0</div><button id="memoryAgain">Mezclar de nuevo ↻</button></div>`;
- function render(){const g=$('#memoryGrid');g.innerHTML=cards.map((s,i)=>`<button class="memory-card ${matched.has(i)?'matched':''} ${opened.includes(i)?'open':''}" data-card="${i}">${matched.has(i)||opened.includes(i)?s:'?'}</button>`).join('');g.querySelectorAll('button').forEach(b=>b.onclick=()=>flip(Number(b.dataset.card)))}
- function flip(i){if(locked||matched.has(i)||opened.includes(i))return;opened.push(i);render();if(opened.length===2){moves++;locked=true;let [a,b]=opened;if(cards[a]===cards[b]){matched.add(a);matched.add(b);opened=[];locked=false;$('#memoryStatus').textContent=`¡Pareja encontrada! Movimientos: ${moves}`;setHeader('🧠 Memoria de corazones',`Parejas: ${matched.size/2}/8`);render();if(matched.size===16)stage.querySelector('.cardbox').insertAdjacentHTML('beforeend','<p><strong>¡Memoria de oro! 🏆💙 Encontraste todos los pares.</strong></p>')}else{setTimeout(()=>{opened=[];locked=false;render();$('#memoryStatus').textContent=`Sigue intentando · Movimientos: ${moves}`},700)} }}
- $('#memoryAgain').onclick=runMemory;render();
-}
+  function jump() {
+    if (state === 'ready') return resetGame();
+    if (state !== 'playing') return;
+    if (!player.jumping) {
+      player.vy = jumpPower; player.jumping = true; beep(540, .09);
+      for (let i=0; i<5; i++) particles.push({x: player.x+15, y: groundY-3, vx: Math.random()*-2, vy: -Math.random()*2, life: 18, color:'#fff'});
+    }
+  }
 
-// GAME 5: click stars
-function runClick(){
- let score=0,time=20,active=true,timer=null,moveTimer=null;
- setHeader('🌟 Caza-estrellas','20 segundos');
- stage.innerHTML=`<div class="cardbox"><div style="font-size:2.5rem">🌟💫</div><h3>¡Atrapa las estrellas!</h3><p>Toca tantas estrellas como puedas antes de que se acabe el tiempo.</p><div class="progress"><div id="clickBar" style="width:100%"></div></div><div style="position:relative;height:190px;border-radius:18px;background:#dff7ff;overflow:hidden;border:2px dashed #a8def6" id="starField"><button id="starTarget" style="position:absolute;left:43%;top:38%;font-size:1.7rem;padding:8px 12px;box-shadow:none">🌟</button></div><p class="feedback" id="clickStatus">Puntos: 0 · Tiempo: 20</p><button id="clickStart">Empezar / Reiniciar</button></div>`;
- const field=$('#starField'),target=$('#starTarget');
- function place(){target.style.left=Math.max(0,Math.random()*(field.clientWidth-58))+'px';target.style.top=Math.max(0,Math.random()*(field.clientHeight-58))+'px';target.textContent=['🌟','💙','🩵','✨','💗'][Math.floor(Math.random()*5)]}
- function start(){clearInterval(timer);clearInterval(moveTimer);score=0;time=20;active=true;target.disabled=false;$('#clickStatus').textContent='Puntos: 0 · Tiempo: 20';$('#clickBar').style.width='100%';place();timer=setInterval(()=>{time--;$('#clickStatus').textContent=`Puntos: ${score} · Tiempo: ${time}`;$('#clickBar').style.width=(time/20*100)+'%';if(time<=0){active=false;clearInterval(timer);clearInterval(moveTimer);target.disabled=true;$('#clickStatus').textContent=`¡Tiempo! Conseguistes ${score} puntos. 🌟`;setHeader('🌟 Caza-estrellas',`${score} estrellas atrapadas`) }},1000);moveTimer=setInterval(()=>{if(active)place()},950)}
- target.onclick=()=>{if(active){score++;$('#clickStatus').textContent=`Puntos: ${score} · Tiempo: ${time}`;place()}};$('#clickStart').onclick=start;cleanup=()=>{clearInterval(timer);clearInterval(moveTimer)};
-}
+  function endGame() {
+    state = 'over'; beep(220, .25);
+    document.getElementById('endEmoji').textContent = score >= 12 ? '👑💙' : '💖';
+    document.getElementById('endTitle').textContent = score >= 12 ? '¡Eres increíble!' : '¡Cada intento cuenta!';
+    document.getElementById('endMessage').textContent = score >= 12
+      ? `Recogiste ${score} corazones. ¡Te mereces un cielo lleno de cosas bonitas! 💙`
+      : `Recogiste ${score} corazón${score === 1 ? '' : 'es'}. Este juego siempre estará aquí para otra aventura contigo. 🩵`;
+    endScreen.classList.remove('hidden');
+  }
 
-// GAME 6: gift
-function runGift(){
- const gifts=[
-  ['💌','Un recordatorio','Tu presencia es la calma de mi día.'],
-  ['🌙','Para una noche difícil','Ojalá recuerdes que mereces descanso, cariño y días tranquilos, cosa que deseo darte.'],
-  ['🩵','Un deseo secreto','Deseo que nunca te falten razones para reír y que estas las compartas conmigo.'],
-  ['🎀','Un pequeño tesoro','No eres mi eternidad, Fernanda. Eres la razón de porque quiero una.'],
-  ['🌈','Promesa de aventura','Con nuestros anillos nos vamos a casar.'],
-  ['💗','El último regalito','Si este juego te sacó una sonrisa, entonces ya cumplió su misión.']
- ];
- setHeader('🎁 Caja sorpresa','Elige un regalito');
- stage.innerHTML=`<div class="cardbox"><div style="font-size:2.5rem">🎁🩵🎁</div><h3>Una cajita llena de palabras bonitas</h3><p>Escoge una caja. Cada una guarda un mensaje secreto.</p><div class="answers">${gifts.map((g,i)=>`<button data-gift="${i}" style="font-size:2rem;padding:16px">🎁</button>`).join('')}</div><div id="giftResult" class="love-note hidden" style="margin-top:15px"></div><button id="giftReset" class="secondary" style="margin-top:13px">Volver a esconder los mensajes</button></div>`;
- document.querySelectorAll('[data-gift]').forEach(b=>b.onclick=()=>{const g=gifts[Number(b.dataset.gift)];$('#giftResult').classList.remove('hidden');$('#giftResult').innerHTML=`<div style="font-size:2.4rem">${g[0]}</div><strong>${g[1]}</strong><br>${g[2]}<br><small>Hecho con cariño, Dahiana. 💙</small>`;b.textContent='💝';b.disabled=true;setHeader('🎁 Caja sorpresa','¡Un mensaje para ti!')});
- $('#giftReset').onclick=runGift;
-}
+  function roundedRect(x,y,w,h,r,fill) {
+    ctx.fillStyle = fill; ctx.beginPath(); ctx.roundRect(x,y,w,h,r); ctx.fill();
+  }
+  function drawCloud(x,y,s) {
+    ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
+    ctx.fillStyle = 'rgba(255,255,255,.9)';
+    ctx.beginPath(); ctx.arc(0,8,18,0,Math.PI*2); ctx.arc(20,0,24,0,Math.PI*2);
+    ctx.arc(43,10,17,0,Math.PI*2); ctx.rect(-4,8,52,17); ctx.fill();
+    ctx.restore();
+  }
+  function drawHeart(x,y,size,color='#ff8fbd') {
+    ctx.save(); ctx.translate(x,y); ctx.scale(size/24,size/24);
+    ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(0,8);
+    ctx.bezierCurveTo(-23,-5,-12,-17,0,-7); ctx.bezierCurveTo(12,-17,23,-5,0,8);
+    ctx.fill(); ctx.restore();
+  }
+  function drawPlayer() {
+    const bob = player.jumping ? 0 : Math.sin(frame*.16)*1.5;
+    const x=player.x, y=player.y+bob;
+    // sombra
+    ctx.fillStyle='rgba(48,133,175,.16)'; ctx.beginPath(); ctx.ellipse(x+18,groundY+2,player.jumping?11:20,4,0,0,Math.PI*2); ctx.fill();
+    // cuerpo tipo conejito azul
+    ctx.fillStyle='#69c9f4';
+    ctx.beginPath(); ctx.ellipse(x+18,y+26,17,17,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(x+10,y+4,5,13,-.25,0,Math.PI*2); ctx.ellipse(x+25,y+3,5,13,.2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#ffb8d7';
+    ctx.beginPath(); ctx.ellipse(x+10,y+4,2,8,-.25,0,Math.PI*2); ctx.ellipse(x+25,y+3,2,8,.2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(x+12,y+22,5,0,Math.PI*2); ctx.arc(x+24,y+22,5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#285d7a'; ctx.beginPath(); ctx.arc(x+13,y+22,2,0,Math.PI*2); ctx.arc(x+23,y+22,2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#ff8fb9'; ctx.beginPath(); ctx.arc(x+18,y+28,2.5,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#285d7a'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(x+18,y+29,4,0.2,Math.PI-.2); ctx.stroke();
+    drawHeart(x+31,y+8,12,'#ff9bc6');
+  }
+  function drawObstacle(o) {
+    roundedRect(o.x,o.y,o.w,o.h,8,'#6fafe0');
+    roundedRect(o.x+4,o.y+4,o.w-8,6,3,'#bdeaff');
+    ctx.fillStyle='#fff'; ctx.font='15px sans-serif'; ctx.textAlign='center'; ctx.fillText('✦',o.x+o.w/2,o.y+o.h/2+5);
+  }
+  function spawnObstacle() {
+    const h = 25 + Math.random()*23, w = 22 + Math.random()*12;
+    obstacles.push({x:W+10,y:groundY-h,w,h});
+  }
+  function spawnHeart() {
+    hearts.push({x:W+10,y:groundY-65-Math.random()*85,size:22,got:false,phase:Math.random()*6});
+  }
+  function collide(a,b) {
+    return a.x+7 < b.x+b.w && a.x+a.w-5 > b.x && a.y+7 < b.y+b.h && a.y+a.h-3 > b.y;
+  }
+  function update() {
+    frame++;
+    clouds.forEach(c=>{c.x-=.35*c.s;if(c.x < -80)c.x=W+50;});
+    if(state!=='playing') return;
+    speed = 4 + Math.min(score*.08, 3.5);
+    player.vy += gravity; player.y += player.vy;
+    if(player.y >= groundY-player.h){player.y=groundY-player.h;player.vy=0;player.jumping=false;}
+    if(frame%Math.max(48, 88-Math.floor(score/3)*3)===0) spawnObstacle();
+    if(frame%125===0) spawnHeart();
+    obstacles.forEach(o=>o.x-=speed);
+    hearts.forEach(h=>{h.x-=speed;h.phase+=.08;h.y+=Math.sin(h.phase)*.25;});
+    obstacles=obstacles.filter(o=>o.x+o.w>-10);
+    hearts=hearts.filter(h=>h.x>-30&&!h.got);
+    for(const o of obstacles){if(collide(player,o)){endGame();return;}}
+    for(const h of hearts){
+      if(!h.got && player.x+player.w>h.x-10 && player.x<h.x+15 && player.y+player.h>h.y-12 && player.y<h.y+15){
+        h.got=true; score++; scoreEl.textContent=score; levelEl.textContent=1+Math.floor(score/5);
+        beep(820,.12); for(let i=0;i<9;i++)particles.push({x:h.x,y:h.y,vx:(Math.random()-.5)*4,vy:(Math.random()-.5)*4,life:25,color:'#ff9bc6'});
+        if(score>best){best=score;bestEl.textContent=best;try{localStorage.setItem('blueJumpBest',best);}catch(_){}}
+      }
+    }
+    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.06;p.life--;});
+    particles=particles.filter(p=>p.life>0);
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    // tiny stars
+    for(let i=0;i<18;i++){
+      const x=(i*67+frame*.12)%W, y=22+(i*43)%180;
+      ctx.globalAlpha=.25+((Math.sin(frame*.04+i)+1)/2)*.35;
+      ctx.fillStyle='#fff';ctx.font='12px sans-serif';ctx.fillText('✦',x,y);
+    }
+    ctx.globalAlpha=1;
+    clouds.forEach(c=>drawCloud(c.x,c.y,c.s));
+    // distant hills
+    ctx.fillStyle='#c3f0e7';ctx.beginPath();ctx.moveTo(0,groundY);ctx.quadraticCurveTo(150,groundY-65,300,groundY);ctx.quadraticCurveTo(500,groundY-80,680,groundY);ctx.lineTo(W,groundY);ctx.fill();
+    ctx.fillStyle='#a8e8dc';ctx.fillRect(0,groundY,W,H-groundY);
+    ctx.fillStyle='#86d8ca';ctx.fillRect(0,groundY,W,7);
+    for(let x=12-(frame*speed*.4)%45;x<W;x+=45){ctx.fillStyle='rgba(255,255,255,.55)';ctx.beginPath();ctx.ellipse(x,groundY+24,8,2,0,0,Math.PI*2);ctx.fill();}
+    hearts.forEach(h=>{if(!h.got)drawHeart(h.x,h.y, h.size);});
+    obstacles.forEach(drawObstacle);
+    drawPlayer();
+    particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/25);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill();});
+    ctx.globalAlpha=1;
+    if(state==='paused'){
+      ctx.fillStyle='rgba(255,255,255,.55)';ctx.fillRect(0,0,W,H);
+      ctx.fillStyle='#287fb3';ctx.textAlign='center';ctx.font='bold 30px Trebuchet MS';ctx.fillText('Pausa para respirar 🩵',W/2,H/2);
+    }
+  }
+  function loop() {
+    update(); draw();
+    if(state==='playing'||state==='paused') animationId=requestAnimationFrame(loop);
+  }
+
+  startBtn.addEventListener('click',resetGame);
+  againBtn.addEventListener('click',resetGame);
+  jumpBtn.addEventListener('click',jump);
+  canvas.addEventListener('pointerdown',()=>{if(state==='playing')jump();});
+  document.addEventListener('keydown',e=>{
+    if(e.code==='Space'||e.code==='ArrowUp'){e.preventDefault();if(state==='playing')jump();else if(state==='ready')resetGame();else if(state==='over')resetGame();}
+    if(e.code==='KeyP')togglePause();
+  });
+  function togglePause(){
+    if(state==='playing'){state='paused';pauseBtn.textContent='▶ Continuar';}
+    else if(state==='paused'){state='playing';pauseBtn.textContent='⏸ Pausar';loop();}
+  }
+  pauseBtn.addEventListener('click',togglePause);
+  soundBtn.addEventListener('click',()=>{soundOn=!soundOn;soundBtn.textContent=soundOn?'🔊 Sonido: sí':'🔇 Sonido: no';if(soundOn)beep(700,.07);});
+  draw();
 })();
 </script>
 </body>
