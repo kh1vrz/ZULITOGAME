@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> ZULITOGAME 💙</title>
+<style>
+  :root {
+    --sky: #bceeff;
+    --blue: #62c9f5;
+    --deep: #277fb7;
+    --navy: #245477;
+    --pink: #ff9fca;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    padding: 18px; font-family: "Trebuchet MS", system-ui, sans-serif;
+    color: var(--navy);
+    background: radial-gradient(circle at 15% 10%, #fff 0 3%, transparent 4%),
+                linear-gradient(145deg, #dff8ff, #a9e3ff 55%, #d7f5ff);
+    overflow-x: hidden;
+  }
+  .game-shell {
+    width: min(920px, 100%); background: rgba(255,255,255,.78);
+    border: 2px solid rgba(255,255,255,.95); border-radius: 28px;
+    box-shadow: 0 22px 60px rgba(43, 126, 176, .18);
+    padding: clamp(14px, 3vw, 28px); backdrop-filter: blur(8px);
+  }
+  header { text-align: center; margin-bottom: 15px; }
+  .eyebrow { letter-spacing: .18em; text-transform: uppercase; font-size: .72rem; font-weight: 800; color: #5798bf; }
+  h1 { margin: 5px 0; font-size: clamp(1.7rem, 5vw, 3rem); color: #2d83b9; }
+  .subtitle { margin: 0; color: #547d98; }
+  .hud { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin: 14px 0 10px; }
+  .pill { border-radius: 999px; padding: 8px 14px; background: #e6f8ff; border: 1px solid #c3edff; font-weight: 800; }
+  .game-area {
+    position: relative; overflow: hidden; border-radius: 22px; border: 2px solid #fff;
+    background: linear-gradient(#9fe4ff 0%, #d9f6ff 76%, #f4fdff 100%);
+    box-shadow: inset 0 -8px 0 rgba(76, 173, 218, .08);
+  }
+  canvas { width: 100%; height: auto; display: block; touch-action: manipulation; }
+  .overlay {
+    position: absolute; inset: 0; display: grid; place-items: center; padding: 20px;
+    text-align: center; background: rgba(216, 246, 255, .78); backdrop-filter: blur(4px);
+  }
+  .overlay.hidden { display: none; }
+  .panel { max-width: 440px; padding: 22px; border: 2px solid #fff; border-radius: 24px; background: rgba(255,255,255,.88); box-shadow: 0 12px 32px #4b9cc533; }
+  .big-heart { font-size: 2.8rem; animation: bob 1.7s ease-in-out infinite; }
+  .panel h2 { margin: 4px 0 8px; color: #287fb3; font-size: clamp(1.4rem, 4vw, 2rem); }
+  .panel p { line-height: 1.5; margin: 8px 0 16px; }
+  button {
+    border: 0; border-radius: 999px; padding: 12px 20px; font: inherit; font-weight: 800;
+    color: white; background: linear-gradient(135deg, #65cafa, #388fc9);
+    box-shadow: 0 5px 0 #2677a8; cursor: pointer; transition: transform .15s, filter .15s;
+  }
+  button:hover { filter: brightness(1.04); transform: translateY(-1px); }
+  button:active { transform: translateY(3px); box-shadow: 0 2px 0 #2677a8; }
+  .controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .controls button { min-width: 135px; }
+  .hint { text-align: center; font-size: .9rem; color: #5c849d; margin: 12px 0 0; }
+  .personal-note { margin-top: 18px; padding: 15px; text-align: center; border-radius: 18px; background: #effaff; border: 1px dashed #a8def6; }
+  .personal-note strong { color: #3289bd; }
+  @keyframes bob { 50% { transform: translateY(-7px) rotate(5deg); } }
+  @media (max-width: 520px) {
+    .game-shell { padding: 13px; border-radius: 22px; }
+    .pill { padding: 7px 10px; font-size: .88rem; }
+    .controls button { flex: 1; min-width: 110px; }
+  }
+</style>
+</head>
+<body>
+<main class="game-shell">
+  <header>
+    <div class="eyebrow">un mini mundo para ti</div>
+    <h1>Un saltito hasta tu corazón 💙</h1>
+    <p class="subtitle">Salta entre las nubecitas y recoge corazoncitos.</p>
+  </header>
+
+  <div class="hud" aria-live="polite">
+    <div class="pill">💗 Corazones: <span id="score">0</span></div>
+    <div class="pill">⭐ Récord: <span id="best">0</span></div>
+    <div class="pill">🌈 Nivel: <span id="level">1</span></div>
+  </div>
+
+  <section class="game-area" aria-label="Juego de saltos">
+    <canvas id="game" width="860" height="390" aria-label="Personaje que salta obstáculos"></canvas>
+    <div class="overlay" id="startScreen"> 
+      <div class="panel">
+        <div class="big-heart">🩵</div>
+        <h2>Hola, mi bonita zulito.</h2>
+        <p>Este pequeño cielo es para ti. Salta por los corazones infinitos que representar mi amor por ti. </p>
+        <button id="startBtn">¡Vamos a jugar! ✨</button>
+      </div>
+    </div>
+    <div class="overlay hidden" id="endScreen">
+      <div class="panel">
+        <div class="big-heart" id="endEmoji">💖</div>
+        <h2 id="endTitle">¡Lo hiciste!</h2>
+        <p id="endMessage">Cada corazoncito es una razón para sonreír.</p>
+        <button id="againBtn">Jugar otra vez ↻</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="controls">
+    <button id="jumpBtn" aria-label="Saltar">⬆ Saltar</button>
+    <button id="pauseBtn">⏸ Pausar</button>
+    <button id="soundBtn">🔊 Sonido: sí</button>
+  </div>
+  <p class="hint">Controles: <strong>espacio</strong>, <strong>↑</strong> o toca «Saltar». Evita los bloques y recoge 💗.</p>
+  <div class="personal-note">
+    <strong>Un mensajito para ti:</strong><br>
+    Cada vez que tengas en frente un obstaculo, recuerda que puedes hacerlo sola, pero no siempre debe ser así. 💙
+  </div>
+</main>
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score');
+  const bestEl = document.getElementById('best');
+  const levelEl = document.getElementById('level');
+  const startScreen = document.getElementById('startScreen');
+  const endScreen = document.getElementById('endScreen');
+  const startBtn = document.getElementById('startBtn');
+  const againBtn = document.getElementById('againBtn');
+  const jumpBtn = document.getElementById('jumpBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const soundBtn = document.getElementById('soundBtn');
+
+  const W = canvas.width, H = canvas.height, groundY = 320;
+  let state = 'ready', score = 0, best = 0, frame = 0, speed = 4;
+  let obstacles = [], hearts = [], particles = [], clouds = [];
+  let soundOn = true, audioCtx = null, animationId = null;
+  const player = { x: 105, y: groundY - 42, w: 36, h: 42, vy: 0, jumping: false };
+  const gravity = 0.68, jumpPower = -13.2;
+
+  try { best = Number(localStorage.getItem('blueJumpBest') || 0); } catch (_) {}
+  bestEl.textContent = best;
+
+  function initClouds() {
+    clouds = [
+      {x: 70, y: 64, s: 1.0}, {x: 310, y: 112, s: .7},
+      {x: 560, y: 58, s: .9}, {x: 780, y: 145, s: .65}
+    ];
+  }
+  initClouds();
+
+  function beep(freq = 600, duration = .08) {
+    if (!soundOn) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+      osc.type = 'sine'; osc.frequency.value = freq;
+      gain.gain.setValueAtTime(.06, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + duration);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(); osc.stop(audioCtx.currentTime + duration);
+    } catch (_) {}
+  }
+
+  function resetGame() {
+    score = 0; frame = 0; speed = 4; obstacles = []; hearts = []; particles = [];
+    player.y = groundY - player.h; player.vy = 0; player.jumping = false;
+    scoreEl.textContent = score; levelEl.textContent = 1;
+    state = 'playing'; startScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+    pauseBtn.textContent = '⏸ Pausar';
+    if (animationId) cancelAnimationFrame(animationId);
+    loop();
+  }
+
+  function jump() {
+    if (state === 'ready') return resetGame();
+    if (state !== 'playing') return;
+    if (!player.jumping) {
+      player.vy = jumpPower; player.jumping = true; beep(540, .09);
+      for (let i=0; i<5; i++) particles.push({x: player.x+15, y: groundY-3, vx: Math.random()*-2, vy: -Math.random()*2, life: 18, color:'#fff'});
+    }
+  }
+
+  function endGame() {
+    state = 'over'; beep(220, .25);
+    document.getElementById('endEmoji').textContent = score >= 12 ? '👑💙' : '💖';
+    document.getElementById('endTitle').textContent = score >= 12 ? '¡Eres increíble!' : '¡Cada intento cuenta!';
+    document.getElementById('endMessage').textContent = score >= 12
+      ? `Recogiste ${score} corazones. ¡Te mereces un cielo lleno de cosas bonitas! 💙`
+      : `Recogiste ${score} corazón${score === 1 ? '' : 'es'}. Este juego siempre estará aquí para otra aventura contigo. 🩵`;
+    endScreen.classList.remove('hidden');
+  }
+
+  function roundedRect(x,y,w,h,r,fill) {
+    ctx.fillStyle = fill; ctx.beginPath(); ctx.roundRect(x,y,w,h,r); ctx.fill();
+  }
+  function drawCloud(x,y,s) {
+    ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
+    ctx.fillStyle = 'rgba(255,255,255,.9)';
+    ctx.beginPath(); ctx.arc(0,8,18,0,Math.PI*2); ctx.arc(20,0,24,0,Math.PI*2);
+    ctx.arc(43,10,17,0,Math.PI*2); ctx.rect(-4,8,52,17); ctx.fill();
+    ctx.restore();
+  }
+  function drawHeart(x,y,size,color='#ff8fbd') {
+    ctx.save(); ctx.translate(x,y); ctx.scale(size/24,size/24);
+    ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(0,8);
+    ctx.bezierCurveTo(-23,-5,-12,-17,0,-7); ctx.bezierCurveTo(12,-17,23,-5,0,8);
+    ctx.fill(); ctx.restore();
+  }
+  function drawPlayer() {
+    const bob = player.jumping ? 0 : Math.sin(frame*.16)*1.5;
+    const x=player.x, y=player.y+bob;
+    // sombra
+    ctx.fillStyle='rgba(48,133,175,.16)'; ctx.beginPath(); ctx.ellipse(x+18,groundY+2,player.jumping?11:20,4,0,0,Math.PI*2); ctx.fill();
+    // cuerpo tipo conejito azul
+    ctx.fillStyle='#69c9f4';
+    ctx.beginPath(); ctx.ellipse(x+18,y+26,17,17,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(x+10,y+4,5,13,-.25,0,Math.PI*2); ctx.ellipse(x+25,y+3,5,13,.2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#ffb8d7';
+    ctx.beginPath(); ctx.ellipse(x+10,y+4,2,8,-.25,0,Math.PI*2); ctx.ellipse(x+25,y+3,2,8,.2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(x+12,y+22,5,0,Math.PI*2); ctx.arc(x+24,y+22,5,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#285d7a'; ctx.beginPath(); ctx.arc(x+13,y+22,2,0,Math.PI*2); ctx.arc(x+23,y+22,2,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#ff8fb9'; ctx.beginPath(); ctx.arc(x+18,y+28,2.5,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle='#285d7a'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(x+18,y+29,4,0.2,Math.PI-.2); ctx.stroke();
+    drawHeart(x+31,y+8,12,'#ff9bc6');
+  }
+  function drawObstacle(o) {
+    roundedRect(o.x,o.y,o.w,o.h,8,'#6fafe0');
+    roundedRect(o.x+4,o.y+4,o.w-8,6,3,'#bdeaff');
+    ctx.fillStyle='#fff'; ctx.font='15px sans-serif'; ctx.textAlign='center'; ctx.fillText('✦',o.x+o.w/2,o.y+o.h/2+5);
+  }
+  function spawnObstacle() {
+    const h = 25 + Math.random()*23, w = 22 + Math.random()*12;
+    obstacles.push({x:W+10,y:groundY-h,w,h});
+  }
+  function spawnHeart() {
+    hearts.push({x:W+10,y:groundY-65-Math.random()*85,size:22,got:false,phase:Math.random()*6});
+  }
+  function collide(a,b) {
+    return a.x+7 < b.x+b.w && a.x+a.w-5 > b.x && a.y+7 < b.y+b.h && a.y+a.h-3 > b.y;
+  }
+  function update() {
+    frame++;
+    clouds.forEach(c=>{c.x-=.35*c.s;if(c.x < -80)c.x=W+50;});
+    if(state!=='playing') return;
+    speed = 4 + Math.min(score*.08, 3.5);
+    player.vy += gravity; player.y += player.vy;
+    if(player.y >= groundY-player.h){player.y=groundY-player.h;player.vy=0;player.jumping=false;}
+    if(frame%Math.max(48, 88-Math.floor(score/3)*3)===0) spawnObstacle();
+    if(frame%125===0) spawnHeart();
+    obstacles.forEach(o=>o.x-=speed);
+    hearts.forEach(h=>{h.x-=speed;h.phase+=.08;h.y+=Math.sin(h.phase)*.25;});
+    obstacles=obstacles.filter(o=>o.x+o.w>-10);
+    hearts=hearts.filter(h=>h.x>-30&&!h.got);
+    for(const o of obstacles){if(collide(player,o)){endGame();return;}}
+    for(const h of hearts){
+      if(!h.got && player.x+player.w>h.x-10 && player.x<h.x+15 && player.y+player.h>h.y-12 && player.y<h.y+15){
+        h.got=true; score++; scoreEl.textContent=score; levelEl.textContent=1+Math.floor(score/5);
+        beep(820,.12); for(let i=0;i<9;i++)particles.push({x:h.x,y:h.y,vx:(Math.random()-.5)*4,vy:(Math.random()-.5)*4,life:25,color:'#ff9bc6'});
+        if(score>best){best=score;bestEl.textContent=best;try{localStorage.setItem('blueJumpBest',best);}catch(_){}}
+      }
+    }
+    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.06;p.life--;});
+    particles=particles.filter(p=>p.life>0);
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    // tiny stars
+    for(let i=0;i<18;i++){
+      const x=(i*67+frame*.12)%W, y=22+(i*43)%180;
+      ctx.globalAlpha=.25+((Math.sin(frame*.04+i)+1)/2)*.35;
+      ctx.fillStyle='#fff';ctx.font='12px sans-serif';ctx.fillText('✦',x,y);
+    }
+    ctx.globalAlpha=1;
+    clouds.forEach(c=>drawCloud(c.x,c.y,c.s));
+    // distant hills
+    ctx.fillStyle='#c3f0e7';ctx.beginPath();ctx.moveTo(0,groundY);ctx.quadraticCurveTo(150,groundY-65,300,groundY);ctx.quadraticCurveTo(500,groundY-80,680,groundY);ctx.lineTo(W,groundY);ctx.fill();
+    ctx.fillStyle='#a8e8dc';ctx.fillRect(0,groundY,W,H-groundY);
+    ctx.fillStyle='#86d8ca';ctx.fillRect(0,groundY,W,7);
+    for(let x=12-(frame*speed*.4)%45;x<W;x+=45){ctx.fillStyle='rgba(255,255,255,.55)';ctx.beginPath();ctx.ellipse(x,groundY+24,8,2,0,0,Math.PI*2);ctx.fill();}
+    hearts.forEach(h=>{if(!h.got)drawHeart(h.x,h.y, h.size);});
+    obstacles.forEach(drawObstacle);
+    drawPlayer();
+    particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/25);ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill();});
+    ctx.globalAlpha=1;
+    if(state==='paused'){
+      ctx.fillStyle='rgba(255,255,255,.55)';ctx.fillRect(0,0,W,H);
+      ctx.fillStyle='#287fb3';ctx.textAlign='center';ctx.font='bold 30px Trebuchet MS';ctx.fillText('Pausa para respirar 🩵',W/2,H/2);
+    }
+  }
+  function loop() {
+    update(); draw();
+    if(state==='playing'||state==='paused') animationId=requestAnimationFrame(loop);
+  }
+
+  startBtn.addEventListener('click',resetGame);
+  againBtn.addEventListener('click',resetGame);
+  jumpBtn.addEventListener('click',jump);
+  canvas.addEventListener('pointerdown',()=>{if(state==='playing')jump();});
+  document.addEventListener('keydown',e=>{
+    if(e.code==='Space'||e.code==='ArrowUp'){e.preventDefault();if(state==='playing')jump();else if(state==='ready')resetGame();else if(state==='over')resetGame();}
+    if(e.code==='KeyP')togglePause();
+  });
+  function togglePause(){
+    if(state==='playing'){state='paused';pauseBtn.textContent='▶ Continuar';}
+    else if(state==='paused'){state='playing';pauseBtn.textContent='⏸ Pausar';loop();}
+  }
+  pauseBtn.addEventListener('click',togglePause);
+  soundBtn.addEventListener('click',()=>{soundOn=!soundOn;soundBtn.textContent=soundOn?'🔊 Sonido: sí':'🔇 Sonido: no';if(soundOn)beep(700,.07);});
+  draw();
+})();
+</script>
+</body>
+</html>
